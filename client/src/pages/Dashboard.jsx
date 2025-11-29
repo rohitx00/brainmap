@@ -176,7 +176,7 @@ const Dashboard = () => {
         <div className="container mx-auto px-4 md:px-6 py-8 md:py-12 pt-20 md:pt-24">
             <div className="grid lg:grid-cols-3 gap-6 md:gap-8">
                 {/* Left Column: Start Quiz */}
-                <div className="lg:col-span-2 space-y-8">
+                <div className="lg:col-span-2 space-y-8 min-w-0">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -246,11 +246,11 @@ const Dashboard = () => {
                                 value={newQueueTopic}
                                 onChange={(e) => setNewQueueTopic(e.target.value)}
                                 placeholder="Add topic to plan..."
-                                className="flex-1 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary outline-none text-slate-900 dark:text-white placeholder:text-slate-400"
+                                className="flex-1 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary outline-none text-slate-900 dark:text-white placeholder:text-slate-400 min-w-0"
                             />
                             <button
                                 onClick={handleAddToQueue}
-                                className="bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 px-4 py-2 rounded-lg transition-colors text-slate-700 dark:text-white"
+                                className="bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 px-4 py-2 rounded-lg transition-colors text-slate-700 dark:text-white shrink-0"
                             >
                                 <Plus className="w-5 h-5" />
                             </button>
@@ -258,14 +258,14 @@ const Dashboard = () => {
 
                         {studyQueue.length > 0 ? (
                             <div className="space-y-4">
-                                <div className="flex items-center justify-between bg-primary/10 border border-primary/20 p-4 rounded-xl">
-                                    <div>
+                                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between bg-primary/10 border border-primary/20 p-4 rounded-xl gap-4">
+                                    <div className="min-w-0 flex-1">
                                         <span className="text-xs text-primary font-bold uppercase tracking-wider">Up Next</span>
-                                        <h3 className="text-xl font-bold">{studyQueue[0]}</h3>
+                                        <h3 className="text-xl font-bold truncate">{studyQueue[0]}</h3>
                                     </div>
                                     <button
                                         onClick={handleStartNextSession}
-                                        className="bg-primary hover:bg-primary-dark px-6 py-2 rounded-lg font-bold transition-colors flex items-center"
+                                        className="bg-primary hover:bg-primary-dark px-6 py-2 rounded-lg font-bold transition-colors flex items-center shrink-0 w-full sm:w-auto justify-center"
                                     >
                                         <MessageSquare className="w-4 h-4 mr-2" /> Start Chat
                                     </button>
@@ -274,13 +274,13 @@ const Dashboard = () => {
                                 <div className="space-y-2">
                                     {studyQueue.slice(1).map((item, index) => (
                                         <div key={index} className="flex items-center justify-between text-slate-600 dark:text-slate-400 bg-slate-100/50 dark:bg-slate-800/30 p-3 rounded-lg group">
-                                            <div className="flex items-center">
-                                                <span className="w-6 text-center text-slate-600 font-mono">{index + 2}</span>
-                                                <span className="ml-3">{item}</span>
+                                            <div className="flex items-center min-w-0 flex-1 mr-4">
+                                                <span className="w-6 text-center text-slate-600 font-mono shrink-0">{index + 2}</span>
+                                                <span className="ml-3 truncate">{item}</span>
                                             </div>
                                             <button
                                                 onClick={() => handleRemoveFromQueue(item)}
-                                                className="text-slate-600 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all"
+                                                className="text-slate-600 hover:text-red-400 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all shrink-0"
                                                 title="Remove from plan"
                                             >
                                                 <Trash2 className="w-4 h-4" />
@@ -307,42 +307,44 @@ const Dashboard = () => {
                             <h3 className="text-xl font-bold mb-6 flex items-center">
                                 <BarChart2 className="w-6 h-6 text-primary mr-2" /> Performance Over Time
                             </h3>
-                            <ResponsiveContainer width="100%" height={250}>
-                                <LineChart data={performanceData}>
-                                    <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-                                    <XAxis
-                                        dataKey="date"
-                                        stroke="#94a3b8"
-                                        style={{ fontSize: '12px' }}
-                                    />
-                                    <YAxis
-                                        stroke="#94a3b8"
-                                        style={{ fontSize: '12px' }}
-                                        domain={[0, 100]}
-                                        ticks={[0, 25, 50, 75, 100]}
-                                    />
-                                    <Tooltip
-                                        contentStyle={{
-                                            backgroundColor: '#1e293b',
-                                            border: '1px solid #334155',
-                                            borderRadius: '8px',
-                                            color: '#94a3b8'
-                                        }}
-                                        labelStyle={{ color: '#94a3b8' }}
-                                        formatter={(value, name, props) => {
-                                            return [`${value}%`, `Score (${props.payload.topic})`];
-                                        }}
-                                    />
-                                    <Line
-                                        type="monotone"
-                                        dataKey="score"
-                                        stroke="#8b5cf6"
-                                        strokeWidth={3}
-                                        dot={{ fill: '#8b5cf6', r: 5 }}
-                                        activeDot={{ r: 7 }}
-                                    />
-                                </LineChart>
-                            </ResponsiveContainer>
+                            <div className="w-full h-[250px]">
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <LineChart data={performanceData}>
+                                        <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+                                        <XAxis
+                                            dataKey="date"
+                                            stroke="#94a3b8"
+                                            style={{ fontSize: '12px' }}
+                                        />
+                                        <YAxis
+                                            stroke="#94a3b8"
+                                            style={{ fontSize: '12px' }}
+                                            domain={[0, 100]}
+                                            ticks={[0, 25, 50, 75, 100]}
+                                        />
+                                        <Tooltip
+                                            contentStyle={{
+                                                backgroundColor: '#1e293b',
+                                                border: '1px solid #334155',
+                                                borderRadius: '8px',
+                                                color: '#94a3b8'
+                                            }}
+                                            labelStyle={{ color: '#94a3b8' }}
+                                            formatter={(value, name, props) => {
+                                                return [`${value}%`, `Score (${props.payload.topic})`];
+                                            }}
+                                        />
+                                        <Line
+                                            type="monotone"
+                                            dataKey="score"
+                                            stroke="#8b5cf6"
+                                            strokeWidth={3}
+                                            dot={{ fill: '#8b5cf6', r: 5 }}
+                                            activeDot={{ r: 7 }}
+                                        />
+                                    </LineChart>
+                                </ResponsiveContainer>
+                            </div>
                         </motion.div>
                     )}
 
@@ -359,18 +361,18 @@ const Dashboard = () => {
                             ) : (
                                 history.map((attempt) => (
                                     <div key={attempt.id} className="glass-card p-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer">
-                                        <div className="flex items-center">
-                                            <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center mr-4">
+                                        <div className="flex items-center min-w-0 flex-1 mr-4">
+                                            <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center mr-4 shrink-0">
                                                 <Clock className="w-5 h-5 text-slate-400" />
                                             </div>
-                                            <div>
-                                                <h4 className="font-semibold">{attempt.topic}</h4>
+                                            <div className="min-w-0">
+                                                <h4 className="font-semibold truncate">{attempt.topic}</h4>
                                                 <p className="text-sm text-slate-500">
                                                     {new Date(attempt.timestamp).toLocaleDateString()} • {attempt.difficulty}
                                                 </p>
                                             </div>
                                         </div>
-                                        <div className="text-right">
+                                        <div className="text-right shrink-0">
                                             <span className="block text-green-400 font-bold">
                                                 {Math.round((attempt.score / attempt.total_questions) * 100)}%
                                             </span>
