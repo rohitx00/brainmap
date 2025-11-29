@@ -23,7 +23,9 @@ const Login = () => {
             login(response.data);
             navigate('/dashboard');
         } catch (err) {
-            setError(err.response?.data?.error || 'Login failed');
+            console.error('Login error details:', err);
+            const errorMessage = err.response?.data?.error || err.message || 'Login failed';
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }
