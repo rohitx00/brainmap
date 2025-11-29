@@ -173,8 +173,8 @@ const Dashboard = () => {
     if (!user) return null;
 
     return (
-        <div className="container mx-auto px-6 py-12 pt-24">
-            <div className="grid lg:grid-cols-3 gap-8">
+        <div className="container mx-auto px-4 md:px-6 py-8 md:py-12 pt-20 md:pt-24">
+            <div className="grid lg:grid-cols-3 gap-6 md:gap-8">
                 {/* Left Column: Start Quiz */}
                 <div className="lg:col-span-2 space-y-8">
                     <motion.div

@@ -25,9 +25,9 @@ const ChatInterface = () => {
                 initial={{ opacity: 0, scale: 0.95, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                className="fixed bottom-24 right-6 w-[400px] h-[600px] glass-card rounded-2xl shadow-2xl flex flex-col overflow-hidden z-50"
+                className="fixed bottom-0 right-0 w-full h-full md:bottom-24 md:right-6 md:w-[400px] md:h-[600px] bg-white/95 dark:bg-slate-900/95 md:glass-card rounded-none md:rounded-2xl shadow-2xl flex flex-col overflow-hidden z-50"
                 style={{
-                    maxHeight: 'calc(100vh - 120px)'
+                    maxHeight: '100vh' // Default for mobile
                 }}
             >
                 {/* Header */}

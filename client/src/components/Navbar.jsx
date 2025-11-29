@@ -108,16 +108,16 @@ const Navbar = () => {
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
-                        className="md:hidden bg-white/95 dark:bg-dark/95 backdrop-blur-xl border-t border-slate-200 dark:border-slate-800"
+                        className="md:hidden bg-white/95 dark:bg-dark/95 backdrop-blur-xl border-t border-slate-200 dark:border-slate-800 overflow-hidden"
                     >
-                        <div className="container mx-auto px-6 py-4 flex flex-col space-y-4">
+                        <div className="container mx-auto px-6 py-6 flex flex-col space-y-4">
                             {navLinks.map((link) => (
                                 isHome ? (
-                                    <a key={link.name} href={link.path} onClick={() => setIsOpen(false)} className="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-white py-2">
+                                    <a key={link.name} href={link.path} onClick={() => setIsOpen(false)} className="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-white py-3 text-lg font-medium border-b border-slate-100 dark:border-slate-800/50 last:border-0">
                                         {link.name}
                                     </a>
                                 ) : (
-                                    <Link key={link.name} to={link.path} onClick={() => setIsOpen(false)} className="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-white py-2">
+                                    <Link key={link.name} to={link.path} onClick={() => setIsOpen(false)} className="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-white py-3 text-lg font-medium border-b border-slate-100 dark:border-slate-800/50 last:border-0">
                                         {link.name}
                                     </Link>
                                 )
@@ -125,27 +125,30 @@ const Navbar = () => {
 
                             {user ? (
                                 <>
-                                    <div className="py-2 border-t border-slate-200 dark:border-slate-800 mt-2">
-                                        <div className="flex items-center space-x-3 mb-4">
-                                            <div className="w-8 h-8 rounded-full bg-gradient-to-r from-primary to-secondary flex items-center justify-center text-white font-bold">
+                                    <div className="py-4 border-t border-slate-200 dark:border-slate-800 mt-2">
+                                        <div className="flex items-center space-x-3 mb-6">
+                                            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-primary to-secondary flex items-center justify-center text-white font-bold text-lg">
                                                 {user.username[0].toUpperCase()}
                                             </div>
-                                            <span className="font-medium text-slate-800 dark:text-white">{user.username}</span>
+                                            <div className="flex flex-col">
+                                                <span className="font-bold text-slate-800 dark:text-white">{user.username}</span>
+                                                <span className="text-xs text-slate-500">Logged in</span>
+                                            </div>
                                         </div>
-                                        <button onClick={() => { handleLogout(); setIsOpen(false); }} className="w-full text-left text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-white py-2 flex items-center">
-                                            <LogOut className="w-4 h-4 mr-2" /> Logout
+                                        <button onClick={() => { handleLogout(); setIsOpen(false); }} className="w-full text-left text-red-500 hover:text-red-600 py-3 flex items-center font-medium bg-red-50 dark:bg-red-900/10 px-4 rounded-xl transition-colors">
+                                            <LogOut className="w-5 h-5 mr-3" /> Sign Out
                                         </button>
                                     </div>
                                 </>
                             ) : (
-                                <>
-                                    <Link to="/login" onClick={() => setIsOpen(false)} className="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-white py-2 block">
+                                <div className="pt-4 flex flex-col gap-3">
+                                    <Link to="/login" onClick={() => setIsOpen(false)} className="w-full text-center py-3 text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-white font-medium border border-slate-200 dark:border-slate-700 rounded-xl">
                                         Login
                                     </Link>
-                                    <Link to="/signup" onClick={() => setIsOpen(false)} className="w-full text-center px-6 py-3 bg-primary text-white rounded-xl font-bold block">
+                                    <Link to="/signup" onClick={() => setIsOpen(false)} className="w-full text-center py-3 bg-primary text-white rounded-xl font-bold shadow-lg shadow-primary/25">
                                         Sign Up
                                     </Link>
-                                </>
+                                </div>
                             )}
                         </div>
                     </motion.div>

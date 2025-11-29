@@ -9,7 +9,7 @@ const LandingPage = () => {
             {/* 1. Hero Section */}
             <section className="relative flex items-center justify-center min-h-screen pt-20 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-b from-primary/20 to-transparent z-0" />
-                <div className="container mx-auto px-6 relative z-10 text-center">
+                <div className="container mx-auto px-4 md:px-6 relative z-10 text-center">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
