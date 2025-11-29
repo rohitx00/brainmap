@@ -35,9 +35,9 @@ const ChatInterface = () => {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
                         onClick={(e) => e.stopPropagation()}
-                        className="fixed bottom-0 right-0 w-full h-full md:bottom-6 md:right-6 md:w-[400px] md:h-[600px] bg-white/95 dark:bg-slate-900/95 md:glass-card rounded-none md:rounded-2xl shadow-2xl flex flex-col overflow-hidden z-50"
+                        className="fixed top-20 bottom-0 right-0 w-full md:top-auto md:bottom-6 md:right-6 md:w-[400px] md:h-[600px] bg-white/95 dark:bg-slate-900/95 md:glass-card rounded-t-2xl md:rounded-2xl shadow-2xl flex flex-col overflow-hidden z-50"
                         style={{
-                            maxHeight: '100vh' // Default for mobile
+                            maxHeight: 'calc(100vh - 80px)' // Ensure it doesn't exceed screen height minus navbar
                         }}
                     >
                         {/* Header */}
