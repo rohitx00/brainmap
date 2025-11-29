@@ -36,7 +36,6 @@ export const generateQuestions = async (topic, difficulty) => {
         const response = await result.response;
         console.log("Got response object");
         const text = response.text();
-        console.log("Raw response text:", text.substring(0, 200));
 
         // Clean up potential markdown formatting if Gemini adds it despite instructions
         const cleanedText = text.replace(/```json/g, '').replace(/```/g, '').trim();
@@ -64,9 +63,15 @@ export const generateContent = async (prompt) => {
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     try {
-        const result = await model.generateContent(prompt);
+        const enhancedPrompt = `${prompt}\n\nKeep the response concise and do not use any markdown formatting.`;
+        const result = await model.generateContent(enhancedPrompt);
         const response = await result.response;
-        return response.text();
+        let text = response.text();
+
+        // Remove markdown characters
+        text = text.replace(/[*#_`]/g, '');
+
+        return text;
     } catch (error) {
         console.error("Gemini content generation error:", error.message);
         throw new Error("Failed to generate content: " + error.message);

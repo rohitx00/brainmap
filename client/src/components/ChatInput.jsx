@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
 import { Send } from 'lucide-react';
 
-const ChatInput = ({ onSend, disabled, remaining }) => {
-    const [input, setInput] = useState('');
+const ChatInput = ({ onSend, disabled, remaining, initialValue = '' }) => {
+    const [input, setInput] = useState(initialValue);
+
+    // Update input when initialValue changes
+    React.useEffect(() => {
+        if (initialValue) {
+            setInput(initialValue);
+        }
+    }, [initialValue]);
     const maxLength = 500;
 
     const handleSubmit = (e) => {

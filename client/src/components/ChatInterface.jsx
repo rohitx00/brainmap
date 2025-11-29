@@ -114,6 +114,7 @@ const ChatInterface = () => {
                     onSend={sendMessage}
                     disabled={loading}
                     remaining={remaining}
+                    initialValue={context?.question ? `Explain this question: "${context.question}"` : ''}
                 />
             </motion.div>
         </AnimatePresence>
