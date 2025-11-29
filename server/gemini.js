@@ -15,7 +15,7 @@ export const generateQuestions = async (topic, difficulty) => {
     - "question": (string)
     - "options": (array of 4 strings)
     - "answer": (string, must be one of the options)
-    - "explanation": (string, brief explanation of the answer)
+    - "explanation": (string, provide a concise explanation.)
 
     Example format:
     [
