@@ -11,7 +11,6 @@ import Quiz from './pages/Quiz';
 import Result from './pages/Result';
 
 import About from './pages/About';
-import Careers from './pages/Careers';
 
 import Contact from './pages/Contact';
 import Footer from './components/Footer';
@@ -34,7 +33,6 @@ function App() {
                 <Route path="/quiz" element={<Quiz />} />
                 <Route path="/result" element={<Result />} />
                 <Route path="/about" element={<About />} />
-                <Route path="/careers" element={<Careers />} />
                 <Route path="/contact" element={<Contact />} />
               </Routes>
               <Footer />

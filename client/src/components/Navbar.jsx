@@ -32,7 +32,6 @@ const Navbar = () => {
         { name: 'Showcase', path: '/#showcase' },
         { name: 'Testimonials', path: '/#testimonials' },
         { name: 'About', path: '/about' },
-        { name: 'Careers', path: '/careers' },
     ];
 
     const appLinks = [

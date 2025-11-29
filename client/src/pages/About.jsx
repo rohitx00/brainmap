@@ -1,8 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Users, Target, Globe, Award } from 'lucide-react';
+import { Users, Target } from 'lucide-react';
+import api from '../utils/api';
 
 const About = () => {
+    const [stats, setStats] = useState({ users: 0, questionsSolved: 0 });
+
+    useEffect(() => {
+        const fetchStats = async () => {
+            try {
+                const response = await api.get('/api/stats');
+                setStats(response.data);
+            } catch (error) {
+                console.error('Failed to fetch stats:', error);
+            }
+        };
+        fetchStats();
+    }, []);
+
     return (
         <div className="min-h-screen pt-24 pb-12 px-6">
             <div className="container mx-auto max-w-4xl">
@@ -27,7 +42,7 @@ const About = () => {
                     >
                         <h2 className="text-3xl font-bold mb-4">Our Story</h2>
                         <p className="text-slate-400 leading-relaxed mb-6">
-                            Founded in 2024, BrainMap started with a simple idea: everyone learns differently.
+                            Founded in 2025, BrainMap started with a simple idea: everyone learns differently.
                             Traditional education often follows a "one size fits all" approach, but we believe
                             technology can bridge the gap.
                         </p>
@@ -44,23 +59,13 @@ const About = () => {
                     >
                         <div className="glass-card p-6 text-center">
                             <Users className="w-8 h-8 text-primary mx-auto mb-2" />
-                            <h3 className="text-2xl font-bold">10k+</h3>
+                            <h3 className="text-2xl font-bold">{stats.users}</h3>
                             <p className="text-sm text-slate-400">Active Learners</p>
                         </div>
                         <div className="glass-card p-6 text-center">
                             <Target className="w-8 h-8 text-secondary mx-auto mb-2" />
-                            <h3 className="text-2xl font-bold">1M+</h3>
+                            <h3 className="text-2xl font-bold">{stats.questionsSolved}</h3>
                             <p className="text-sm text-slate-400">Questions Solved</p>
-                        </div>
-                        <div className="glass-card p-6 text-center">
-                            <Globe className="w-8 h-8 text-accent mx-auto mb-2" />
-                            <h3 className="text-2xl font-bold">50+</h3>
-                            <p className="text-sm text-slate-400">Countries</p>
-                        </div>
-                        <div className="glass-card p-6 text-center">
-                            <Award className="w-8 h-8 text-green-400 mx-auto mb-2" />
-                            <h3 className="text-2xl font-bold">#1</h3>
-                            <p className="text-sm text-slate-400">AI EdTech App</p>
                         </div>
                     </motion.div>
                 </div>
