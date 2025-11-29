@@ -85,9 +85,7 @@ const Result = () => {
     const percentage = resultData && questions.length > 0 ? Math.round((resultData.score / questions.length) * 100) : 0;
     // Fallback score calculation if API fails but we want to show something (optional)
     const localScore = questions.reduce((acc, q, idx) => {
-        // This is a guess since we don't know the correct answer without the API or it being in the question object
-        // If the API returns the correct answers in the resultData, use that.
-        return acc;
+        return acc + (answers[idx] === q.answer ? 1 : 0);
     }, 0);
 
 
@@ -113,13 +111,7 @@ const Result = () => {
             <div className="grid gap-6 mb-12">
                 {questions.map((q, idx) => {
                     const userAnswer = answers[idx];
-                    // Use resultData correctness if available, otherwise we can't really know without the backend response
-                    // For now, let's assume the backend returns a 'results' array or similar, OR we just show the user's answer.
-                    // If the backend doesn't return per-question correctness, we might need to adjust the API.
-                    // Let's assume the question object has an 'answer' field if it was passed back, or we rely on the explanation.
-
-                    // Simplified for now: Just show what they picked. 
-                    // In a real app, resultData should contain the graded breakdown.
+                    const isCorrect = userAnswer === q.answer;
 
                     return (
                         <motion.div
@@ -127,18 +119,29 @@ const Result = () => {
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: idx * 0.1 }}
-                            className="glass-card p-6 border-l-4 border-l-primary"
+                            className={`glass-card p-6 border-l-4 ${isCorrect ? 'border-l-green-500' : 'border-l-red-500'}`}
                         >
                             <div className="flex items-start justify-between mb-4">
                                 <h3 className="text-lg font-semibold">{q.question}</h3>
+                                {isCorrect ? (
+                                    <CheckCircle className="text-green-500 w-6 h-6 flex-shrink-0" />
+                                ) : (
+                                    <XCircle className="text-red-500 w-6 h-6 flex-shrink-0" />
+                                )}
                             </div>
 
                             <div className="grid md:grid-cols-2 gap-4 text-sm">
-                                <div className="p-3 rounded-lg bg-slate-100 dark:bg-slate-700/50 text-slate-700 dark:text-slate-300">
+                                <div className={`p-3 rounded-lg ${isCorrect ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200' : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200'}`}>
                                     <span className="font-bold block mb-1">Your Answer:</span>
                                     {userAnswer || "Skipped"}
                                 </div>
-                                {/* We might not know the correct answer here if the backend doesn't send it back explicitly in a list */}
+
+                                {!isCorrect && (
+                                    <div className="p-3 rounded-lg bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200">
+                                        <span className="font-bold block mb-1">Correct Answer:</span>
+                                        {q.answer}
+                                    </div>
+                                )}
                             </div>
 
                             <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700/50 text-sm text-slate-500 dark:text-slate-400">

@@ -7,6 +7,20 @@ import { useChat } from '../context/ChatContext';
 import api from '../utils/api';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
+const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+        return (
+            <div className="bg-slate-800 border border-slate-700 p-3 rounded-lg shadow-lg">
+                <p className="text-slate-300 font-bold mb-1">{label}</p>
+                <p className="text-xs text-slate-400 mb-2">{payload[0].payload.date}</p>
+                <p className="text-primary font-semibold">{payload[0].payload.topic}</p>
+                <p className="text-white">Score: {payload[0].value}%</p>
+            </div>
+        );
+    }
+    return null;
+};
+
 const Dashboard = () => {
     const navigate = useNavigate();
     const { user } = useAuth();
@@ -312,7 +326,7 @@ const Dashboard = () => {
                                     <LineChart data={performanceData}>
                                         <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
                                         <XAxis
-                                            dataKey="date"
+                                            dataKey="name"
                                             stroke="#94a3b8"
                                             style={{ fontSize: '12px' }}
                                         />
@@ -322,18 +336,7 @@ const Dashboard = () => {
                                             domain={[0, 100]}
                                             ticks={[0, 25, 50, 75, 100]}
                                         />
-                                        <Tooltip
-                                            contentStyle={{
-                                                backgroundColor: '#1e293b',
-                                                border: '1px solid #334155',
-                                                borderRadius: '8px',
-                                                color: '#94a3b8'
-                                            }}
-                                            labelStyle={{ color: '#94a3b8' }}
-                                            formatter={(value, name, props) => {
-                                                return [`${value}%`, `Score (${props.payload.topic})`];
-                                            }}
-                                        />
+                                        <Tooltip content={<CustomTooltip />} />
                                         <Line
                                             type="monotone"
                                             dataKey="score"
@@ -341,6 +344,7 @@ const Dashboard = () => {
                                             strokeWidth={3}
                                             dot={{ fill: '#8b5cf6', r: 5 }}
                                             activeDot={{ r: 7 }}
+                                            label={{ position: 'top', fill: '#94a3b8', fontSize: 12 }}
                                         />
                                     </LineChart>
                                 </ResponsiveContainer>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import { Brain, Mail, Lock, User, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '../utils/api';
@@ -10,6 +11,7 @@ const Signup = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const { login } = useAuth();
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -18,8 +20,9 @@ const Signup = () => {
         setLoading(true);
 
         try {
-            await api.post('/auth/signup', { username, email, password });
-            navigate('/login');
+            const response = await api.post('/auth/signup', { username, email, password });
+            login(response.data);
+            navigate('/dashboard');
         } catch (err) {
             setError(err.response?.data?.error || 'Signup failed');
         } finally {
