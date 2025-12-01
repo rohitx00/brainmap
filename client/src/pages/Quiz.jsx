@@ -16,7 +16,7 @@ const Quiz = () => {
     const [questions, setQuestions] = useState([]);
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [answers, setAnswers] = useState({});
-    const [timeLeft, setTimeLeft] = useState(600); // 10 minutes
+    const [timeLeft, setTimeLeft] = useState(300); // 5 minutes
     const [loading, setLoading] = useState(true);
 
     // Data Fetching
@@ -69,7 +69,7 @@ const Quiz = () => {
             state: {
                 answers,
                 questions,
-                timeTaken: 600 - timeLeft,
+                timeTaken: 300 - timeLeft,
                 userId: user?.userId,
                 topic,
                 difficulty

@@ -14,6 +14,7 @@ import About from './pages/About';
 
 import Contact from './pages/Contact';
 import Leaderboard from './pages/Leaderboard';
+import Profile from './pages/Profile';
 import Footer from './components/Footer';
 
 import { ThemeProvider } from './context/ThemeContext';
@@ -36,6 +37,7 @@ function App() {
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/leaderboard" element={<Leaderboard />} />
+                <Route path="/profile" element={<Profile />} />
               </Routes>
               <Footer />
               <FloatingChatButton />

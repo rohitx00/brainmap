@@ -6,7 +6,6 @@ import { useAuth } from '../context/AuthContext';
 import ThemeToggle from './ThemeToggle';
 
 const Navbar = () => {
-    // ... existing state ...
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const location = useLocation();
@@ -70,12 +69,12 @@ const Navbar = () => {
 
                         {user ? (
                             <div className="flex items-center space-x-4">
-                                <div className="flex items-center space-x-2 text-sm font-medium text-slate-600 dark:text-slate-300">
+                                <Link to="/profile" className="flex items-center space-x-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-white transition-colors">
                                     <div className="w-8 h-8 rounded-full bg-gradient-to-r from-primary to-secondary flex items-center justify-center text-white font-bold">
                                         {user.username[0].toUpperCase()}
                                     </div>
                                     <span className="hidden lg:inline">{user.username}</span>
-                                </div>
+                                </Link>
                                 <button onClick={handleLogout} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-white" title="Logout">
                                     <LogOut className="w-5 h-5" />
                                 </button>
@@ -127,15 +126,15 @@ const Navbar = () => {
                             {user ? (
                                 <>
                                     <div className="py-4 border-t border-slate-200 dark:border-slate-800 mt-2">
-                                        <div className="flex items-center space-x-3 mb-6">
+                                        <Link to="/profile" onClick={() => setIsOpen(false)} className="flex items-center space-x-3 mb-6">
                                             <div className="w-10 h-10 rounded-full bg-gradient-to-r from-primary to-secondary flex items-center justify-center text-white font-bold text-lg">
                                                 {user.username[0].toUpperCase()}
                                             </div>
                                             <div className="flex flex-col">
                                                 <span className="font-bold text-slate-800 dark:text-white">{user.username}</span>
-                                                <span className="text-xs text-slate-500">Logged in</span>
+                                                <span className="text-xs text-slate-500">View Profile</span>
                                             </div>
-                                        </div>
+                                        </Link>
                                         <button onClick={() => { handleLogout(); setIsOpen(false); }} className="w-full text-left text-red-500 hover:text-red-600 py-3 flex items-center font-medium bg-red-50 dark:bg-red-900/10 px-4 rounded-xl transition-colors">
                                             <LogOut className="w-5 h-5 mr-3" /> Sign Out
                                         </button>
