@@ -1,12 +1,16 @@
 import React, { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Trash2, Sparkles } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { X, Trash2, Sparkles, LogIn } from 'lucide-react';
 import { useChat } from '../context/ChatContext';
+import { useAuth } from '../context/AuthContext';
 import ChatMessage from './ChatMessage';
 import ChatInput from './ChatInput';
 
 const ChatInterface = () => {
     const { isOpen, closeChat, messages, loading, sendMessage, clearSession, remaining, sessionType, context } = useChat();
+    const { user } = useAuth();
+    const navigate = useNavigate();
     const messagesEndRef = useRef(null);
     const messagesContainerRef = useRef(null);
 
@@ -85,7 +89,26 @@ const ChatInterface = () => {
                                 scrollBehavior: 'smooth'
                             }}
                         >
-                            {messages.length === 0 ? (
+                            {!user ? (
+                                <div className="flex flex-col items-center justify-center h-full text-center p-6">
+                                    <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mb-4">
+                                        <LogIn className="w-8 h-8 text-primary" />
+                                    </div>
+                                    <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-2">Login Required</h3>
+                                    <p className="text-slate-500 dark:text-slate-400 mb-6">
+                                        Please log in to chat with your AI Tutor and save your progress.
+                                    </p>
+                                    <button
+                                        onClick={() => {
+                                            closeChat();
+                                            navigate('/login');
+                                        }}
+                                        className="px-6 py-3 bg-primary hover:bg-primary/90 text-white rounded-xl font-bold transition-all transform hover:scale-105 shadow-lg shadow-primary/25"
+                                    >
+                                        Log In Now
+                                    </button>
+                                </div>
+                            ) : messages.length === 0 ? (
                                 <div className="flex items-center justify-center h-full text-slate-500 text-sm text-center">
                                     <div>
                                         <Sparkles className="w-12 h-12 mx-auto mb-2 text-primary" />
@@ -119,13 +142,15 @@ const ChatInterface = () => {
                             )}
                         </div>
 
-                        {/* Input Area */}
-                        <ChatInput
-                            onSend={sendMessage}
-                            disabled={loading}
-                            remaining={remaining}
-                            initialValue={context?.question ? `Explain this question: "${context.question}"` : ''}
-                        />
+                        {/* Input Area - Only show if logged in */}
+                        {user && (
+                            <ChatInput
+                                onSend={sendMessage}
+                                disabled={loading}
+                                remaining={remaining}
+                                initialValue={context?.question ? `Explain this question: "${context.question}"` : ''}
+                            />
+                        )}
                     </motion.div>
                 </>
             )}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 
 const Leaderboard = () => {
     const [users, setUsers] = useState([]);
@@ -14,7 +14,7 @@ const Leaderboard = () => {
     const fetchLeaderboard = async () => {
         try {
             setLoading(true);
-            const response = await axios.get(`http://localhost:5000/api/gamification/leaderboard?page=${page}&limit=10`);
+            const response = await api.get(`/api/gamification/leaderboard?page=${page}&limit=10`);
             setUsers(response.data.users);
             setTotalPages(response.data.totalPages);
             setLoading(false);

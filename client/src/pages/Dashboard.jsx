@@ -425,7 +425,6 @@ const Dashboard = () => {
                             <div className="bg-white/50 dark:bg-slate-800/50 p-4 rounded-xl text-center col-span-2">
                                 <Clock className="w-8 h-8 text-blue-500 mx-auto mb-2" />
                                 <div className="text-2xl font-bold">{formatTimeSpent(totalTimeSpent)}</div>
-                                <div className="text-2xl font-bold">{formatTimeSpent(totalTimeSpent)}</div>
                                 <div className="text-xs text-slate-400">Time Spent</div>
                             </div>
                             <div className="bg-white/50 dark:bg-slate-800/50 p-4 rounded-xl text-center col-span-2 mt-4 border-t border-slate-200 dark:border-slate-700 pt-4">
