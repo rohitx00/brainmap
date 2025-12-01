@@ -7,6 +7,7 @@ import { searchTopics } from '../matcher_interface.js';
 import { manageQueue } from '../study_queue_interface.js';
 import { generatePDF } from '../pdf_service.js';
 import Attempt from '../models/Attempt.js';
+import { checkAndAwardBadges } from './gamificationController.js';
 
 export const generateQuiz = async (req, res) => {
     const { topic, difficulty } = req.body;
@@ -37,11 +38,15 @@ export const submitQuiz = async (req, res) => {
 
         const result = await attempt.save();
 
+        // 3. Check and Award Badges/XP
+        const gamificationResult = await checkAndAwardBadges(userId, attempt);
+
         res.json({
             attemptId: result._id,
             score: gradingResult.score,
             efficiency: gradingResult.efficiency,
-            summary: gradingResult.summary
+            summary: gradingResult.summary,
+            gamification: gamificationResult
         });
     } catch (error) {
         console.error(error);

@@ -18,6 +18,14 @@ const userSchema = new mongoose.Schema({
     created_at: {
         type: Date,
         default: Date.now
+    },
+    xp: {
+        type: Number,
+        default: 0
+    },
+    badges: {
+        type: [String],
+        default: []
     }
 });
 

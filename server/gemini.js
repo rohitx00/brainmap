@@ -30,11 +30,8 @@ export const generateQuestions = async (topic, difficulty) => {
     Do not include markdown formatting like \`\`\`json. Just return the raw JSON array.`;
 
     try {
-        console.log("Calling Gemini API...");
         const result = await model.generateContent(prompt);
-        console.log("Gemini API call successful");
         const response = await result.response;
-        console.log("Got response object");
         const text = response.text();
 
         // Clean up potential markdown formatting if Gemini adds it despite instructions

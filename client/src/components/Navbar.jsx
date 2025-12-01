@@ -36,6 +36,7 @@ const Navbar = () => {
 
     const appLinks = [
         { name: 'Dashboard', path: '/dashboard' },
+        { name: 'Leaderboard', path: '/leaderboard' },
     ];
 
     const navLinks = isHome ? homeLinks : appLinks;

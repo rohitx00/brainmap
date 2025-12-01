@@ -29,6 +29,7 @@ const Dashboard = () => {
     const [difficulty, setDifficulty] = useState('Medium');
     const [loading, setLoading] = useState(false);
     const [stats, setStats] = useState({ totalQuizzes: 0, totalTimeSpent: 0, averageScore: 0 });
+    const [gamificationStats, setGamificationStats] = useState({ xp: 0, badges: [] });
     const [recommendation, setRecommendation] = useState({ recommendation: '', reason: '' });
     const [dueReviews, setDueReviews] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
@@ -124,10 +125,20 @@ const Dashboard = () => {
             }
         };
 
+        const fetchGamificationStats = async () => {
+            try {
+                const response = await api.get(`/api/gamification/user/${user.userId}`);
+                setGamificationStats(response.data);
+            } catch (error) {
+                console.error('Failed to fetch gamification stats:', error);
+            }
+        };
+
         fetchHistory();
         fetchStats();
         fetchRecommendation();
         fetchReviews();
+        fetchGamificationStats();
     }, [user, navigate, searchQuery]);
 
     const handleStartQuiz = async (e) => {
@@ -414,7 +425,27 @@ const Dashboard = () => {
                             <div className="bg-white/50 dark:bg-slate-800/50 p-4 rounded-xl text-center col-span-2">
                                 <Clock className="w-8 h-8 text-blue-500 mx-auto mb-2" />
                                 <div className="text-2xl font-bold">{formatTimeSpent(totalTimeSpent)}</div>
+                                <div className="text-2xl font-bold">{formatTimeSpent(totalTimeSpent)}</div>
                                 <div className="text-xs text-slate-400">Time Spent</div>
+                            </div>
+                            <div className="bg-white/50 dark:bg-slate-800/50 p-4 rounded-xl text-center col-span-2 mt-4 border-t border-slate-200 dark:border-slate-700 pt-4">
+                                <div className="flex justify-between items-center mb-2">
+                                    <div className="text-left">
+                                        <div className="text-xs text-slate-400">Total XP</div>
+                                        <div className="text-xl font-bold text-indigo-500">{gamificationStats.xp}</div>
+                                    </div>
+                                    <div className="text-right">
+                                        <div className="text-xs text-slate-400">Badges</div>
+                                        <div className="text-xl font-bold text-yellow-500">{gamificationStats.badges.length}</div>
+                                    </div>
+                                </div>
+                                <div className="flex flex-wrap gap-1 justify-center">
+                                    {gamificationStats.badges.map((badge, i) => (
+                                        <span key={i} className="bg-yellow-100 text-yellow-800 text-[10px] font-medium px-2 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300 border border-yellow-300">
+                                            {badge}
+                                        </span>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     </motion.div>

@@ -13,6 +13,7 @@ import Result from './pages/Result';
 import About from './pages/About';
 
 import Contact from './pages/Contact';
+import Leaderboard from './pages/Leaderboard';
 import Footer from './components/Footer';
 
 import { ThemeProvider } from './context/ThemeContext';
@@ -34,6 +35,7 @@ function App() {
                 <Route path="/result" element={<Result />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/leaderboard" element={<Leaderboard />} />
               </Routes>
               <Footer />
               <FloatingChatButton />

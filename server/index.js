@@ -5,6 +5,7 @@ import authRoutes from './routes/authRoutes.js';
 import quizRoutes from './routes/quizRoutes.js';
 import tutorRoutes from './routes/tutorRoutes.js';
 import statsRoutes from './routes/statsRoutes.js';
+import gamificationRoutes from './routes/gamificationRoutes.js';
 
 import connectDB from './db.js';
 
@@ -28,6 +29,7 @@ app.use('/auth', authRoutes);
 app.use('/api', quizRoutes);
 app.use('/api/tutor', tutorRoutes);
 app.use('/api/stats', statsRoutes);
+app.use('/api/gamification', gamificationRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
